@@ -1,9 +1,9 @@
-#Dense Matrix Vector Multiplication
+# Dense Matrix Vector Multiplication
 
 ## Description
 Calculate the dense matrix vector multiplication.  Each processor input (load) assigned rows from the input file. For practicing purpose, MPI_Alltoallv is used to re-distribute data. After MPI_Alltoallv, each processor holds data with assigned columns. For each processor the corresponded rows in the vector file is loaded. The local multiplication results of processors were further reduced to processor 0.
 
-##Usage   
+## Usage   
 Compiled_program [binary matrix file location] [binary vector file location]  
 
 eg.
@@ -15,8 +15,8 @@ a.out Bin/M1.bin Bin/V1.bin
 &nbsp;&nbsp;&nbsp;&nbsp;**Bin/V1.bin**: location of binary vector file  
 
 
-##Header files
-###Startup_Dense.h
+## Header files
+### Startup_Dense.h
 Startup_Dense.h file should includes two parameters: nrow and ncol
 
 eg. 
@@ -28,18 +28,18 @@ eg.
 &nbsp;&nbsp;&nbsp;&nbsp;**ncol**: number of columnss in the input matrix
 
 
-##Input files
-###matrix.bin
+## Input files
+### matrix.bin
 Matrix file should include nrow * ncol intergers(4 bytes).
 
-###vector.bin
+### vector.bin
 Vector file should include nrow intergers(4 bytes).
 
 
 
-##Procedure of the program
+## Procedure of the program
 
-###Import Matrix File
+### Import Matrix File
 
 Each processor import assigned rows in the matrix file.
 
@@ -58,7 +58,7 @@ nrow = 100, and number of processor = 3.
 &nbsp;&nbsp;&nbsp;&nbsp;processor 2 import row 66 to row 99 (34 rows)  
 
 
-###Data re-distributed
+### Data re-distributed
 For practice purpose, the data is re-distributed, and each processor holds assigned column of the input matrix.
 
 eg.  
@@ -71,7 +71,7 @@ After re-distributed:
 &nbsp;&nbsp;&nbsp;&nbsp;processor 0 holds column 0 to column 24.  
 &nbsp;&nbsp;&nbsp;&nbsp;processor 1 holds column 25 to column 49.  
 
-###Import Vector File
+### Import Vector File
 Each processor import partial data from vector file.
 
 eg.  
@@ -82,7 +82,7 @@ processor 1 holds column 25 to column 49 of the matrix.
 &nbsp;&nbsp;&nbsp;&nbsp;processor 1 import element 25 to element 49 from the vector file.  
 
 
-###Mutiplication and reduce
+### Mutiplication and reduce
 Each processor calculate the local_result, and use MPI_Reduce to get the global result in processor 0. 
 
 
