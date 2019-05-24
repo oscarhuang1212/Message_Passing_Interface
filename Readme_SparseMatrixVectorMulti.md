@@ -1,9 +1,9 @@
-#Sparse Matrix Vector Multiplication
+# Sparse Matrix Vector Multiplication
 
 ## Description
 Calculate the sparse matrix vector multiplication.  Each processor input (load) assigned number of points from the input matrix file. For each processor, the number of points in each row is counted and saved in row_npoints. The row_npoints is reduced and broadcasted by MPI_Reduceall to all processor. The nodes from the input matrix is re-distributed based on the row of the node. The vector is loaded to every processor, and the local result is calculated in each processor. The local results are gathered by MPI_Gatherv for the final result.
 
-##Usage   
+## Usage   
 Compiled_program [binary matrix file location] [binary vector file location]  
 
 eg.
@@ -15,8 +15,8 @@ a.out Bin/M1.bin Bin/V1.bin
 &nbsp;&nbsp;&nbsp;&nbsp;**Bin/V1.bin**: location of binary vector file  
 
 
-##Header files
-###Startup_Dense.h
+## Header files
+### Startup_Dense.h
 Startup_Dense.h file should includes two parameters: nrow, ncol, and npoints
 
 eg. 
@@ -30,16 +30,16 @@ eg.
 &nbsp;&nbsp;&nbsp;&nbsp;**npoints**: number of nodes in the input matrix
 
 
-##Input files
-###matrix.bin
+## Input files
+### matrix.bin
 Input matrix include npoints nodes, each nodes is represents as three integers: row, column, and value (3 * 4 bytes)
 
-###vector.bin
+### vector.bin
 Vector file should include nrow intergers(4 bytes).
 
 
-##Structure 
-###node
+## Structure 
+### node
 The node structure represent each node in the sparse matrix. The node with value *value* is at location row: *row*, and column: *col*.
 
 ```
@@ -52,9 +52,9 @@ struct node
 ```
 
 
-##Procedure of the program
+## Procedure of the program
 
-###Import Matrix File
+### Import Matrix File
 
 Each processor import assigned points in the matrix file.
 
@@ -73,7 +73,7 @@ npoint = 100, and number of processor = 3.
 &nbsp;&nbsp;&nbsp;&nbsp;processor 2 import node 66 to node 99 (34 nodes)  
 
 
-###Data re-distributed
+### Data re-distributed
 Based on the number of nodes in each rows, the data is re-distrubuted for load balanced. 
 
 eg.  
@@ -93,11 +93,11 @@ After re-distributed:
 &nbsp;&nbsp;&nbsp;&nbsp;processor 0 holds row 0 to row 10. (55 nodes)  
 &nbsp;&nbsp;&nbsp;&nbsp;processor 1 holds row 11 to row 99. (45 nodes)  
 
-###Import Vector File
+### Import Vector File
 Import whole vector to each processor
 
 
-###Mutiplication and gather
+### Mutiplication and gather
 Each processor calculate the local_result, and use MPI_Gatherv to get the global result in processor 0. 
 
 
